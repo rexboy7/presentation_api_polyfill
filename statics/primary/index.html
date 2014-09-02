@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+<meta charset="utf-8" />
+<title>Presentation API client</title>
+<style>
+  #peerList {
+    width: 100px;
+  }
+</style>
+<!-- Polyfill libraries -->
+<script defer src='/statics/lib/js/adapter.js'></script>
+<script defer src='/statics/lib/js/server_config.js'></script>
+<script defer src='/statics/lib/js/http_signal_peer.js'></script>
+<script defer src='/statics/lib/js/polyfill_presentation_session.js'></script>
+<script defer src='/statics/lib/js/polyfill_primary.js'></script>
+<!-- User script -->
+<script defer src='/statics/primary/js/primary.js'></script>
+</head>
+
+<body>
+<h1> Room number: <span id="room"></span></h1>
+<section>
+  <input id="chattxt"></input>
+  <button id="sendbutton">Send</button>
+</section>
+<hr />
+<section>
+  <select id="peerList" size=10></select>
+  <button id="btnConnect">connect</button>
+  <button id="btnDisconnect">disconnect</button>
+</section>
+<div id="status"></div>
+</body>
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1">
+<meta charset="utf-8" />
+<title>Presentation API client</title>
+<!-- Polyfill libraries -->
+<script defer src='/statics/lib/js/adapter.js'></script>
+<script defer src='/statics/lib/js/server_config.js'></script>
+<script defer src='/statics/lib/js/http_signal_peer.js'></script>
+<script defer src='/statics/lib/js/polyfill_presentation_session.js'></script>
+<script defer src='/statics/lib/js/polyfill_secondary_host.js'></script>
+<style>
+iframe {
+  height: calc(100% - 100px);
+  width: 100%;
+}
+</style>
+
+<body>
+<article>
+<h1> Room number: <span id="room"></span></h1>
+</article>
+</body>
+</html>
