@@ -56,7 +56,7 @@ The block diagram of current Presentation API polyfill is shown below:
 
   secondary_page page (sorry for the poor naming :-/) contains anything that need to be shown on the second screen. dvelopers should prepare the contents that need to be shown on the second screen, which is usually the screen away from an user. Meanwhile, secondary_page page also responsible for listening to `presentation.onpresent` to confirm the session from primary page is correctly established, and start further communication.
 
-  An example of primary page is located in `/statics/primary/index.html`. You should use `http://your.ip.address:8000/secondary_host/<room_number>` to access it on the web browser.
+  An example of secondary page is located in `/statics/secondary_page/index.html`. You should use `http://your.ip.address:8000/secondary_host/<room_number>` to access it on the web browser.
 
   You need to include the following polyfill library in your secondary_page page before using Presentation API:
 ```
