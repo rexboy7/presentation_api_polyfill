@@ -1,11 +1,10 @@
 (function(exports) {
 'use strict';
 
-
 var HTTPSignalPeer = {
   rank: rank, // 'host' or 'guest'
-  pc: null,
   dc: null,
+  pc: null,
   evtSrc: null,
   onsecondarychange: null,
   ondatachannelopened: null,

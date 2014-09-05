@@ -5,6 +5,13 @@ function PresentationSession(signaler) {
   this.signaler = signaler;
   this._currentstate = 'disconnected';
   this.pc = new RTCPeerConnection(pc_config, pc_constraints);
+  this.pc.onicecandidate = function(e) {
+    if (e.candidate == null) {
+      return;
+    }
+    this.signaler.send('icecandidate', e.candidate.toJSON(), this.id);
+    this.pc.onicecandidate = null;
+  }.bind(this);
 }
 
 PresentationSession.prototype = {

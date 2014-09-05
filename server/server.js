@@ -56,22 +56,22 @@ app.get('/events/secondary_host/:roomNum', function(req, res) {
 
 app.post('/offer', function(req, res) {
   secondaryBroadcast(req.body.roomNum, 'offer', req.body);
-  res.end();
+  sendPostResult(res, true);
 });
 
 app.post('/answer', function(req, res) {
   primaryBroadcast(req.body.roomNum, 'answer', req.body);
-  res.end();
+  sendPostResult(res, true);
 });
 
 app.post('/primaryicecandidate', function(req, res) {
   secondaryBroadcast(req.body.roomNum, 'icecandidate', req.body);
-  res.end();
+  sendPostResult(res, true);
 });
 
-app.post('/secondaryicecandidate', function(req, res) {
+app.post('/secondary_hosticecandidate', function(req, res) {
   primaryBroadcast(req.body.roomNum, 'icecandidate', req.body);
-  res.end();
+  sendPostResult(res, true);
 });
 
 function removeFromRoom(pool, roomNum, req) {
@@ -102,6 +102,13 @@ function secondaryBroadcast(roomNum, event, data) {
   });
 }
 
+function sendPostResult(res, isSuccess) {
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache'
+  });
+  res.end(JSON.stringify({isSuccess: isSuccess}));
+}
 app.listen(8000);
 
 function sendSSEHeader(res) {
