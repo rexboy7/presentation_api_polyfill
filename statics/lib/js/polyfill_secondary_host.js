@@ -2,7 +2,7 @@
 'use strict';
 
 var PolyfillSecondaryHost = {
-  channelPeer: HTTPSignalPeer,
+  channelPeer: new HTTPSignalPeer(),
   presentWindows: {},
   init: function() {
     this.channelPeer.init();

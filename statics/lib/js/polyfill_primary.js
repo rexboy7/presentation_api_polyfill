@@ -1,8 +1,8 @@
 (function(exports) {
 'use strict';
 
-var Presentation = {
-  channelPeer: HTTPSignalPeer,
+var PolyFillPrimary = {
+  channelPeer: new HTTPSignalPeer(),
   sessions: {},
   peerList: document.getElementById('peerList'),
   btnConnect: document.getElementById('btnConnect'),
@@ -70,14 +70,14 @@ var Presentation = {
 
 var PrimarySessionSignaler = {
   send: function pss_sendMessage(event, data, id) {
-    Presentation.channelPeer.dataChannelSend(event, data, id);
+    PolyFillPrimary.channelPeer.dataChannelSend(event, data, id);
   },
   onpresent: function pss_onopened() {}
 };
 
-Presentation.init();
+PolyFillPrimary.init();
 
-exports.navigator.presentation = Presentation;
+exports.navigator.presentation = PolyFillPrimary;
 
 var roomTag = document.getElementById('room');
 if (roomTag) {

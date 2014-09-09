@@ -1,17 +1,16 @@
 (function(exports) {
 'use strict';
 
-var HTTPSignalPeer = {
-  rank: rank, // 'host' or 'guest'
-  dc: null,
-  pc: null,
-  evtSrc: null,
-  onsecondarychange: null,
-  ondatachannelopened: null,
+function HTTPSignalPeer() {
+}
+
+HTTPSignalPeer.prototype = {
   get isIdle() {
     return !(this.dc);
   },
   init: function php_init() {
+    this.rank = rank;
+    this.dc = null;
     this.pc && this.pc.close();
     this.evtSrc && this.evtSrc.close();
 
@@ -153,10 +152,9 @@ var HTTPSignalPeer = {
       this[cbname](data);
     }
   }
-}
+};
 
 exports.HTTPSignalPeer = HTTPSignalPeer;
 
 
 })(window);
-

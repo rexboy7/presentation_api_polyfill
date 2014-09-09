@@ -25,6 +25,6 @@ var serverPort = 8000;
 
 
 function error(e) {
-  console.log(e);
+  console.log(JSON.stringify(e));
   throw e;
 }
