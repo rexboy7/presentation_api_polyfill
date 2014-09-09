@@ -5,11 +5,12 @@ Runs on Firefox.
 
 ## Requirement
 
-You will need `node.js` with `express` package to run the signaling server. do:
+You will need `node.js` with `express` and `body-parser` package to run the signaling server. do:
 
-> npm install express
+> npm install
 
-to install express package if you haven't installed `express` yet.
+to install dependencies.
+
 ## Running
 
 1. Run `node.js server/server.js`.
