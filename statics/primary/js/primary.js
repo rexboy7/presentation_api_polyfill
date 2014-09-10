@@ -1,5 +1,6 @@
 var chattxt = document.getElementById('chattxt');
 var sendbutton = document.getElementById('sendbutton');
+var secondaryPageURL = document.getElementById('secondaryPageURL');
 var session = null;
 
 sendbutton.addEventListener('click', function() {
@@ -8,7 +9,7 @@ sendbutton.addEventListener('click', function() {
 
 // For guest
 navigator.presentation.onavailablechange = function(e) {
-  session = navigator.presentation.requestSession('/statics/secondary_page/index.html');
+  session = navigator.presentation.requestSession(secondaryPageURL.value);
   session.onmessage = this.log.bind(this);
 };
 var UI = {
