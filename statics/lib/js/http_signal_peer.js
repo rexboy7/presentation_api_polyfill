@@ -42,6 +42,7 @@ HTTPSignalPeer.prototype = {
   },
   handleEvent: function php_ondata(evt) {
     var message = JSON.parse(evt.data);
+    console.log(evt.type);
     switch (evt.type) {
       case 'secondarychange':
         this.rank = 'primary';
@@ -88,14 +89,17 @@ HTTPSignalPeer.prototype = {
     }.bind(this), error);
   },
   serializeSend: function php_serializeSend(message) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('post', '/' + message.event);
+    console.log("1");
+    var xhr = new XMLHttpRequest({mozSystem: true});
+    xhr.open('POST', serverUrl + '/' + message.event);
+    console.log("2" + serverUrl + '/' + message.event);
 
     xhr.setRequestHeader('Content-type','application/json; charset=utf-8');
+    xhr.setRequestHeader('Accept','application/json');
 
-
+    console.log(message);
     xhr.send(JSON.stringify(message));
-    //xhr.onload = this.log.bind();
+    xhr.onload = this.log.bind();
   },
   gotRemoteOffer: function php_gotRemoteOffer(offer) {
     this.pc.setRemoteDescription(new RTCSessionDescription(offer), function() {

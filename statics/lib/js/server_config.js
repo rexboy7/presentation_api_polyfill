@@ -1,9 +1,12 @@
 'use strict';
 
 var _globals = window.location.href.split('/');
+var serverDN = _globals[2].split(':')[0];
+var serverPort = _globals[2].split(':')[1];
 var roomNum = _globals.pop();
 var rank = _globals.pop();
-var eventUrl = '/events/' + rank + "/" + roomNum;
+var serverUrl = 'http://' + [serverDN, serverPort].join(':');
+var eventUrl = serverUrl + '/events/' + rank + "/" + roomNum;
 
 var pc_config = webrtcDetectedBrowser === 'firefox' ?
   {'iceServers':[{'url':'stun:23.21.150.121'}]} : // number IP
@@ -18,10 +21,6 @@ var pc_constraints = webrtcDetectedBrowser === 'firefox' ? {
     {'DtlsSrtpKeyAgreement': true},
     {'RtpDataChannels': true}
   ]}
-  ;
-var serverURL = '127.0.0.1';
-var serverPort = 8000;
-
 
 
 function error(e) {

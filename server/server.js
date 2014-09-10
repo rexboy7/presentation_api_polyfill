@@ -14,6 +14,11 @@ var nextRoom = 0;
 var primary = {};
 var secondary = {};
 
+app.all('*', function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  next();
+});
 
 app.get('/primary/:roomNum', function(req, res) {
   fs.createReadStream(__dirname + '/../statics/primary/index.html').pipe(res);
@@ -103,10 +108,8 @@ function secondaryBroadcast(roomNum, event, data) {
 }
 
 function sendPostResult(res, isSuccess) {
-  res.writeHead(200, {
-    'Content-Type': 'text/event-stream',
-    'Cache-Control': 'no-cache'
-  });
+  res.header('Content-Type', 'application/json');
+  res.header('Cache-Control', 'no-cache');
   res.end(JSON.stringify({isSuccess: isSuccess}));
 }
 app.listen(8000);
@@ -116,7 +119,8 @@ function sendSSEHeader(res) {
     'Content-Type': 'text/event-stream',
     'Cache-Control': 'no-cache',
     'Connection': 'keep-alive',
-    'Access-Control-Allow-Origin': '*'
+    'Access-Control-Allow-Origin': '*',
+    "Access-Control-Allow-Headers": "X-Requested-With"
   });
   appendSSE(res, 'ping', {ping: "hello"});
 
