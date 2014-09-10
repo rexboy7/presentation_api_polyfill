@@ -58,12 +58,11 @@ PresentationSession.prototype = {
     this.dc.onmessage = this._onDataChannelReceive.bind(this);
     this.dc.onopen = this._onDataChannelOpened.bind(this);
     this.dc.onclose = this._onDataChannelClosed.bind(this);
-
-    this.currentstate = 'connected';
-    this._emit('statechange');
   },
   _onDataChannelOpened: function ps_onDataChannelOpened(evt) {
     this.signaler.onpresent({session: this});
+    this._currentstate = 'connected';
+    this._emit('statechange');
   },
   _onDataChannelClosed: function ps_onDataChannelClosed(evt) {
     this.signaler.onclose(evt, this.id);
