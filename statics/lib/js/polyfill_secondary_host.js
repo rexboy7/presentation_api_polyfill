@@ -25,11 +25,7 @@ var PolyfillSecondaryHost = {
             this.channelPeer.dataChannelSend('presentoffer', message.data, message.id);
             break;
           case 'closesession':
-            if (!this.presentWindows[message.id]) {
-              break;
-            }
-            this.presentWindows[message.id].close();
-            delete this.presentWindows[evt.data.id];
+            this.presentWindows[message.id].state = 'disconnected';
             break;
           case 'icecandidate':
             this.channelPeer.dataChannelSend('secondaryicecandidate', message.data, message.id);
@@ -58,6 +54,9 @@ var PolyfillSecondaryHost = {
         this.presentWindows[message.id]._handleMessage({data: message});
         break;
     }
+  },
+  remove: function(windowId) {
+    delete this.presentWindows[windowId];
   }
 };
 
@@ -66,13 +65,18 @@ function PresentWindow(url) {
   this.frame = document.createElement('iframe');
   this.id = url;
   this.frame.src = url;
+  this.state = 'new';
   document.body.appendChild(this.frame);
   // @event initpresent: {
   //   event: 'initpresent',
   //   data: URL for window to be opened
   // }
   this.frame.onload = function() {
+    this.state = 'connected';
     this.frame.contentWindow.postMessage({event: 'initpresent', id: this.id}, '*');
+  }.bind(this);
+  this.frame.onunload = function() {
+    PolyfillSecondaryHost.remove(this.id);
   }.bind(this);
 }
 
@@ -91,9 +95,6 @@ PresentWindow.prototype = {
           id: message.id}, '*');
       break;
     };
-  },
-  close: function ps_close() {
-    this.frame.parentElement.removeChild(this.frame);
   }
 }
 

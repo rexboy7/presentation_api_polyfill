@@ -12,6 +12,7 @@ function PresentationSession(signaler) {
     this.signaler.send('icecandidate', e.candidate.toJSON(), this.id);
     this.pc.onicecandidate = null;
   }.bind(this);
+  this.pc.onsignalingstatechange = this._onPeerStateChange.bind(this);
 }
 
 PresentationSession.prototype = {
@@ -57,15 +58,22 @@ PresentationSession.prototype = {
     this.dc = evt.channel;
     this.dc.onmessage = this._onDataChannelReceive.bind(this);
     this.dc.onopen = this._onDataChannelOpened.bind(this);
-    this.dc.onclose = this._onDataChannelClosed.bind(this);
+    this.dc.onclose = this._onclose.bind(this);
   },
   _onDataChannelOpened: function ps_onDataChannelOpened(evt) {
     this.signaler.onpresent({session: this});
     this._currentstate = 'connected';
     this._emit('statechange');
   },
-  _onDataChannelClosed: function ps_onDataChannelClosed(evt) {
-    this.signaler.onclose(evt, this.id);
+  _onPeerStateChange: function ps_onPeerConnectionClosed(evt) {
+    if(this.pc.signalingState == 'closed') {
+      this._onclose();
+    }
+  },
+  _onclose: function ps_close() {
+    this._currentstate = 'disconnected';
+    this._emit('statechange');
+    this.signaler.onclose(this);
   },
   _onDataChannelReceive: function ps_onDataChannelReceive(evt){
     this._emit('message', evt.data);
@@ -76,8 +84,6 @@ PresentationSession.prototype = {
       this[cbname](data);
     }
   },
-  //TODO: implement onstatechange
-
 
   _url: null
 };

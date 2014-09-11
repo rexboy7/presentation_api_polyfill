@@ -71,8 +71,8 @@ var SecondarySessionSignaler = {
   onpresent: function sss_onpresent(evt) {
     Presentation.onpresent(evt);
   },
-  onclose: function sss_onclose(evt, id) {
-    parent.postMessage({event: 'closesession', id: id}, '*');
+  onclose: function sss_onclose(session) {
+    parent.postMessage({event: 'closesession', id: session.id}, '*');
   }
 };
 

@@ -11,6 +11,9 @@ sendbutton.addEventListener('click', function() {
 navigator.presentation.onavailablechange = function(e) {
   session = navigator.presentation.requestSession(secondaryPageURL.value);
   session.onmessage = this.log.bind(this);
+  session.onstatechange = function() {
+    console.log(session.state);
+  }.bind(this);
 };
 var UI = {
   btnDisconnect: document.getElementById('btnDisconnect'),

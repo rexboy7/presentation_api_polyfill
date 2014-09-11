@@ -72,7 +72,8 @@ var PrimarySessionSignaler = {
   send: function pss_sendMessage(event, data, id) {
     PolyFillPrimary.channelPeer.dataChannelSend(event, data, id);
   },
-  onpresent: function pss_onopened() {}
+  onpresent: function pss_onopened() {},
+  onclose: function pss_onclose() {}
 };
 
 PolyFillPrimary.init();
