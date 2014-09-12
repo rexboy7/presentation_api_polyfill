@@ -8,13 +8,17 @@ sendbutton.addEventListener('click', function() {
 });
 
 // For guest
-navigator.presentation.onavailablechange = function(e) {
-  session = navigator.presentation.requestSession(secondaryPageURL.value);
-  session.onmessage = this.log.bind(this);
-  session.onstatechange = function() {
-    console.log(session.state);
-  }.bind(this);
+navigator.presentation.onavailablechange = function(data) {
+  console.log ('Secondary exist:' + data.available);
+  if(data.available) {
+    session = navigator.presentation.requestSession(secondaryPageURL.value);
+    session.onmessage = this.log.bind(this);
+    session.onstatechange = function() {
+      console.log(session.state);
+    }.bind(this);
+  }
 };
+
 var UI = {
   btnDisconnect: document.getElementById('btnDisconnect'),
   init: function ui_init() {
@@ -23,5 +27,6 @@ var UI = {
   disconnect: function php_disconnect() {
     session.close();
   }
-}
+};
+
 UI.init();

@@ -139,6 +139,7 @@ HTTPSignalPeer.prototype = {
     }));
   },
   reset: function php_reset() {
+    this.emit('datachannelclose');
     this.init();
   },
   log: function php_log(message) {
