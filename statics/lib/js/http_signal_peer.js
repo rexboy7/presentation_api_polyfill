@@ -45,7 +45,6 @@ HTTPSignalPeer.prototype = {
     switch (evt.type) {
       case 'secondarychange':
         this.rank = 'primary';
-        this.log(message.length + ' screens available:' + message);
         this.emit('secondarychange', message.screens);
         break;
       case 'offer':
@@ -95,7 +94,6 @@ HTTPSignalPeer.prototype = {
     xhr.setRequestHeader('Accept','application/json');
 
     xhr.send(JSON.stringify(message));
-    xhr.onload = this.log.bind();
   },
   gotRemoteOffer: function php_gotRemoteOffer(offer) {
     this.pc.setRemoteDescription(new RTCSessionDescription(offer), function() {
